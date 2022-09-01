@@ -1,0 +1,8 @@
+# Binaries for programs and plugins
+axiomv
+*.exe
+*.exe~
+*.so
+*.dylib
+*.dll
+vls.log

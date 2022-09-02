@@ -35,7 +35,7 @@ pub fn new(access_token string, deployment_url string, org_id string) ?&Client {
 }
 
 pub fn (mut client Client) get(endpoint string) ?http.Response {
-	mut req := http.new_request(.get, client.deployment_url + endpoint, "") or {
+	mut req := http.new_request(.get, endpoint, "") or {
 		return err
 	}
 
@@ -44,6 +44,48 @@ pub fn (mut client Client) get(endpoint string) ?http.Response {
 	req.add_header(.content_type, "application/json")
 	req.add_header(.user_agent, "axiom-v/0.1.0")
 
-	resp := req.do() ?
+	resp := req.do()?
+	return resp
+}
+
+pub fn (mut client Client) post(endpoint string, data string) ?http.Response {
+	mut req := http.new_request(.post, endpoint, data) or {
+		return err
+	}
+
+	req.add_header(.authorization, "Bearer $client.access_token")
+	req.add_header(.accept, "application/json")
+	req.add_header(.content_type, "application/json")
+	req.add_header(.user_agent, "axiom-v/0.1.0")
+
+	resp := req.do()?
+	return resp
+}
+
+pub fn (mut client Client) put(endpoint string, data string) ?http.Response {
+	mut req := http.new_request(.put, endpoint, data) or {
+		return err
+	}
+
+	req.add_header(.authorization, "Bearer $client.access_token")
+	req.add_header(.accept, "application/json")
+	req.add_header(.content_type, "application/json")
+	req.add_header(.user_agent, "axiom-v/0.1.0")
+
+	resp := req.do()?
+	return resp
+}
+
+pub fn (mut client Client) delete(endpoint string) ?http.Response {
+	mut req := http.new_request(.delete, endpoint, "") or {
+		return err
+	}
+
+	req.add_header(.authorization, "Bearer $client.access_token")
+	req.add_header(.accept, "application/json")
+	req.add_header(.content_type, "application/json")
+	req.add_header(.user_agent, "axiom-v/0.1.0")
+
+	resp := req.do()?
 	return resp
 }

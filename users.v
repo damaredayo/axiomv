@@ -10,7 +10,7 @@ pub:
 }
 
 pub fn (mut client Client) get_current_user() ?User {
-	resp := client.get("user") or {
+	resp := client.get(client.deployment_url + "user") or {
 		return error("failed to get current user")
 	}
 	return json.decode(User, resp.body)
